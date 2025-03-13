@@ -1,9 +1,15 @@
 const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
+app.use(express.json());  // ✅ Enables JSON parsing in API requests
+
 
 const app = express();
-app.use(cors());
+//app.use(cors());
+app.use(cors({
+    origin: "https://your-frontend.onrender.com"  // ✅ Replace with your frontend's Render URL
+}));
+
 
 let allFlags = []; // Store all country flags after fetching
 
@@ -116,7 +122,28 @@ app.get("/api/random-flags", async (req, res) => {
 });
 
 // 🚀 Start the server
-const PORT = 5000;
+//const PORT = 5000;
+const PORT = process.env.PORT || 5000;  // ✅ Allow Render to assign a port
+
+let leaderboard = [];  // ✅ Store leaderboard scores in memory
+
+// 📌 GET Leaderboard (Top 5 scores)
+app.get("/api/leaderboard", (req, res) => {
+    res.json(leaderboard.sort((a, b) => b.score - a.score).slice(0, 5)); // Return top 5 scores
+});
+
+// 📌 POST New Score
+app.post("/api/leaderboard", (req, res) => {
+    const { name, score } = req.body;
+    if (!name || typeof score !== "number") {
+        return res.status(400).json({ error: "Invalid data format" });
+    }
+    leaderboard.push({ name, score });
+    leaderboard = leaderboard.sort((a, b) => b.score - a.score).slice(0, 5); // Keep only top 5 scores
+    res.json({ message: "Score added!", leaderboard });
+});
+
+
 app.listen(PORT, () => {
     console.log(`✅ Server running on port ${PORT}`);
 });
