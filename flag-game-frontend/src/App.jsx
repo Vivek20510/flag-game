@@ -47,7 +47,8 @@ function App() {
     const fetchFlag = async () => {
         try {
             //const res = await axios.get(`http://localhost:5000/api/random-flag`);
-            const res = await axios.get(`${API_URL}/random-flag`);
+            const res = await axios.get(`${API_URL}/api/random-flag`);
+
             setFlag(res.data.flag);
             setOptions(res.data.options);
             setCorrectCountry(res.data.correctAnswer);
