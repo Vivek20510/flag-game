@@ -7,7 +7,7 @@ app.use(express.json());  // ✅ Enables JSON parsing in API requests
 const app = express();
 //app.use(cors());
 app.use(cors({
-    origin: "https://your-frontend.onrender.com"  // ✅ Replace with your frontend's Render URL
+    origin: "https://flag-game-iecx.onrender.com"  // ✅ Replace with your frontend's Render URL
 }));
 
 
