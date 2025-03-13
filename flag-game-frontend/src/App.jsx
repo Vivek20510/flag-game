@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import API_URL from "./config";
 import "./App.css";
 
 function App() {
@@ -45,7 +46,8 @@ function App() {
     // Fetch a random flag and options
     const fetchFlag = async () => {
         try {
-            const res = await axios.get(`http://localhost:5000/api/random-flag`);
+            //const res = await axios.get(`http://localhost:5000/api/random-flag`);
+            const res = await axios.get(`${API_URL}/random-flag`);
             setFlag(res.data.flag);
             setOptions(res.data.options);
             setCorrectCountry(res.data.correctAnswer);
@@ -99,18 +101,44 @@ function App() {
     };
 
     // Update the leaderboard
-    const updateLeaderboard = () => {
-        const newEntry = { name: username, score };
-        const updatedLeaderboard = [...leaderboard, newEntry].sort((a, b) => b.score - a.score);
-        setLeaderboard(updatedLeaderboard.slice(0, 5));
-        localStorage.setItem("leaderboard", JSON.stringify(updatedLeaderboard.slice(0, 5)));
-    };
+    // const updateLeaderboard = () => {
+    //     const newEntry = { name: username, score };
+    //     const updatedLeaderboard = [...leaderboard, newEntry].sort((a, b) => b.score - a.score);
+    //     setLeaderboard(updatedLeaderboard.slice(0, 5));
+    //     localStorage.setItem("leaderboard", JSON.stringify(updatedLeaderboard.slice(0, 5)));
+    // };
+
+    const updateLeaderboard = async () => {
+      try {
+          const newEntry = { name: username, score };
+          
+          // Send the new score to the backend
+          await axios.post(`${API_URL}/leaderboard`, newEntry);
+  
+          // Fetch the updated leaderboard from the backend
+          const res = await axios.get(`${API_URL}/leaderboard`);
+          setLeaderboard(res.data);
+      } catch (error) {
+          console.error("Error updating leaderboard:", error);
+      }
+  };
+  
 
     // Load leaderboard from local storage
-    const loadLeaderboard = () => {
-        const storedLeaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
-        setLeaderboard(storedLeaderboard);
-    };
+    // const loadLeaderboard = () => {
+    //     const storedLeaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
+    //     setLeaderboard(storedLeaderboard);
+    // };
+
+    const loadLeaderboard = async () => {
+      try {
+          const res = await axios.get(`${API_URL}/leaderboard`);
+          setLeaderboard(res.data);
+      } catch (error) {
+          console.error("Error fetching leaderboard:", error);
+      }
+  };
+  
 
     return (
         <div className="container">
