@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Game from "./pages/Game";
+import NotFound from "./pages/NotFound";
 import Leaderboard from "./components/Leaderboard";
 
 const App = () => {
@@ -11,6 +12,7 @@ const App = () => {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/game" element={<Game />} />
+                    <Route path="*" element={<NotFound />} /> {/* 404 Route */}
                     <Route path="/leaderboard" element={<Leaderboard />} />
                 </Routes>
             </div>

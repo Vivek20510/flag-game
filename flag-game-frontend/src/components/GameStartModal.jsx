@@ -15,10 +15,17 @@ const GameStartModal = ({ onClose }) => {
       return;
     }
 
-    if (gameMode === "multiplayer") {
-      navigate("/room", { state: { username } }); // Navigate to Room component
+    // Check for valid game modes
+    const validGameModes = ["classic", "time-attack", "elimination", "multiplayer"];
+    
+    if (validGameModes.includes(gameMode)) {
+      if (gameMode === "multiplayer") {
+        navigate("/room", { state: { username } });
+      } else {
+        navigate("/Game", { state: { username, gameMode, flagCount } });
+      }
     } else {
-      navigate("/Game", { state: { username, gameMode, flagCount } });
+      navigate("/404"); // Redirect to 404 page if invalid game mode
     }
 
     onClose();

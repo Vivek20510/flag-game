@@ -551,3 +551,133 @@ p {
   color: #777;
   margin-top: 15px;
 }
+
+/* 404 Page Container */
+.not-found-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  background-color: #f8f9fa;
+  color: #333;
+  padding: 20px;
+}
+
+/* 404 Error Number */
+.not-found-container h1 {
+  font-size: 6rem;
+  color: #ff5722;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* 404 Message */
+.not-found-container h2 {
+  font-size: 2rem;
+  margin-top: 10px;
+  color: #444;
+}
+
+/* Page Not Found Text */
+.not-found-container p {
+  font-size: 1.2rem;
+  color: #777;
+  margin: 10px 0 20px;
+}
+
+/* Back to Home Button */
+.not-found-container button {
+  background: #2196f3;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.not-found-container button:hover {
+  background: #1976d2;
+  transform: scale(1.05);
+}
+
+.not-found-container {
+  text-align: center;
+  padding: 50px;
+  font-family: Arial, sans-serif;
+  color: #333;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+.error-code {
+  font-size: 80px;
+  font-weight: bold;
+  color: #ff6347;
+  animation: bounce 1s infinite;
+}
+
+.error-text {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.error-description {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.construction-animation {
+  font-size: 20px;
+  font-weight: bold;
+  color: #ff9800;
+  animation: blink 1s infinite alternate;
+}
+
+.home-btn {
+  background-color: #ff6347;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.home-btn:hover {
+  background-color: #e5533d;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.3;
+  }
+}
