@@ -20,7 +20,7 @@ const GameStartModal = ({ onClose }) => {
     
     if (validGameModes.includes(gameMode)) {
       if (gameMode === "multiplayer") {
-        navigate("/room", { state: { username } });
+        navigate("/404", { state: { username } });
       } else {
         navigate("/Game", { state: { username, gameMode, flagCount } });
       }
