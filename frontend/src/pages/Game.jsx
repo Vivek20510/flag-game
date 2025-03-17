@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { addToLeaderboard } from "../firebase/leaderboardService"; // Import Firebase function
+
 import "../index.css";
 
 const TIME_ATTACK_DURATION = 60; // ⏳ 60 seconds for Time Attack
@@ -150,16 +152,20 @@ const Game = () => {
 
   const endGame = () => {
     setGameOver(true);
-    saveScore();
+    saveScore(); // ✅ Now saves to Firestore instead of localStorage
   };
+  
 
   // 🏆 Save Score to Local Storage
-  const saveScore = () => {
-    const leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
-    leaderboard.push({ username, score });
-    leaderboard.sort((a, b) => b.score - a.score);
-    localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
+  const saveScore = async () => {
+    try {
+      await addToLeaderboard(username, score);
+      console.log("Score saved to Firestore!");
+    } catch (error) {
+      console.error("Error saving score:", error);
+    }
   };
+  
 
   return (
     <div className="game-container">

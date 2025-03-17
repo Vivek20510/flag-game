@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getLeaderboard } from "../firebase/leaderboardService";
 import "../index.css"; // Ensure correct CSS path
 
 const Leaderboard = () => {
@@ -7,9 +8,11 @@ const Leaderboard = () => {
   const [players, setPlayers] = useState([]);
 
   useEffect(() => {
-    const leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
-    const sortedPlayers = leaderboard.sort((a, b) => b.score - a.score); // Sort highest first
-    setPlayers(sortedPlayers);
+    const fetchLeaderboard = async () => {
+      const data = await getLeaderboard();
+      setPlayers(data);
+    };
+    fetchLeaderboard();
   }, []);
 
   return (
@@ -18,15 +21,13 @@ const Leaderboard = () => {
       <button className="back-btn" onClick={() => navigate("/")}>🔙 Back to Home</button>
 
       {players.length > 0 ? (
-        <div className="leaderboard-list">
-          <ul>
-            {players.map((player, index) => (
-              <li key={index}>
-                <span>{index + 1}. {player.username}</span> - <b>{player.score} pts</b>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <ul>
+          {players.map((player, index) => (
+            <li key={index}>
+              <span>{index + 1}. {player.username}</span> - <b>{player.score} pts</b>
+            </li>
+          ))}
+        </ul>
       ) : (
         <p>No scores recorded yet!</p>
       )}

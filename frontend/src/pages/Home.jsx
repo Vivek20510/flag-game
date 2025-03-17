@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getLeaderboard } from "../firebase/leaderboardService"; // Import Firestore function
 import "../index.css";
 import GameStartModal from "../components/GameStartModal";
 
@@ -8,11 +9,14 @@ const Home = () => {
   const [topPlayers, setTopPlayers] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
-  // Function to get top 3 players from localStorage
-  const updateLeaderboard = () => {
-    const leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
-    const topThree = leaderboard.sort((a, b) => b.score - a.score).slice(0, 3);
-    setTopPlayers(topThree);
+  // Fetch leaderboard from Firestore
+  const updateLeaderboard = async () => {
+    try {
+      const leaderboard = await getLeaderboard();
+      setTopPlayers(leaderboard.slice(0, 3)); // Take top 3 players
+    } catch (error) {
+      console.error("Error fetching leaderboard:", error);
+    }
   };
 
   useEffect(() => {
@@ -27,7 +31,7 @@ const Home = () => {
     return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
 
-  // Function to handle game start
+  // Handle game start
   const handleStartGame = ({ username, gameMode, flagCount }) => {
     if (gameMode === "multiplayer") {
       navigate("/multiplayer-game", { state: { username } });
@@ -40,12 +44,12 @@ const Home = () => {
     <div className="home-container">
       <h1 className="title">🌍 Guess The Country Flag</h1>
 
-      {/* Play Buttons */}
+      {/* Play Button */}
       <button className="play-btn" onClick={() => setShowModal(true)}>
         Play Now
       </button>
 
-      {/* Show Game Start Modal */}
+      {/* Game Start Modal */}
       {showModal && (
         <GameStartModal
           onStart={handleStartGame}
