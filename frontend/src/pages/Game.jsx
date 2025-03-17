@@ -11,8 +11,14 @@ const easyFlags = [
   "Spain", "Mexico", "Argentina", "China", "Russia", "South Korea", "South Africa", "Egypt", "Turkey", "Indonesia",
   "Sweden", "Netherlands", "Poland", "Thailand", "Switzerland", "Norway", "Belgium", "Portugal", "Denmark", "Finland",
   "Greece", "Ireland", "New Zealand", "Singapore", "Malaysia", "Vietnam", "Chile", "Colombia", "Saudi Arabia", "UAE",
-  "Philippines", "Czech Republic", "Hungary", "Ukraine", "Austria", "Israel", "Qatar", "Peru", "Bangladesh", "Pakistan"
+  "Philippines", "Czech Republic", "Hungary", "Ukraine", "Austria", "Israel", "Qatar", "Peru", "Bangladesh", "Pakistan",
+  "Nigeria", "Kenya", "Morocco", "Venezuela", "Romania", "Algeria", "Sri Lanka", "Ethiopia", "Cuba", "Kazakhstan",
+  "Croatia", "Slovakia", "Bulgaria", "Belarus", "Uruguay", "Paraguay", "Ecuador", "Bolivia", "Costa Rica", "Panama",
+  "Kuwait", "Oman", "Jordan", "Lebanon", "Luxembourg", "Lithuania", "Latvia", "Estonia", "Slovenia", "Iceland",
+  "Malta", "Cyprus", "Georgia", "Armenia", "Azerbaijan", "Mongolia", "Nepal", "Myanmar", "Cambodia", "Laos",
+  "Afghanistan", "Uzbekistan", "Turkmenistan", "Kyrgyzstan", "Tajikistan", "North Korea", "Botswana", "Namibia", "Zambia", "Zimbabwe"
 ];
+
 
 const Game = () => {
   const navigate = useNavigate();
