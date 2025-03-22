@@ -6,17 +6,27 @@ const NotFound = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="not-found-container">
-      <h1 className="error-code">404</h1>
-      <h2 className="error-text">Oops! Page Not Found</h2>
-      <p className="error-description">
-        The page you are looking for does not exist or is under construction. 🚧
-      </p>
-      <div className="construction-animation">
-        🚧👷‍♂️ Under Construction... Please check back later! 👷‍♀️🚧
+    <section className="page_404">
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-12">
+            <div className="col-sm-10 col-sm-offset-1 text-center">
+              <div className="four_zero_four_bg">
+                <h1 className="text-center">404</h1>
+              </div>
+
+              <div className="contant_box_404">
+                <h3 className="h2">Looks like you're lost</h3>
+                <p>The page you are looking for is not available!</p>
+                <button className="link_404" onClick={() => navigate("/")}>
+                  Go to Home
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <button className="home-btn" onClick={() => navigate("/")}>🏠 Back to Home</button>
-    </div>
+    </section>
   );
 };
 
