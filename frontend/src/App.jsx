@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Game from "./pages/Game";
 import Leaderboard from "./components/Leaderboard";
 import NotFound from "./pages/NotFound";
+import { addToLeaderboard } from "./firebase/leaderboardService";
 
 // ─── Inner App (has access to router hooks) ───────────────────────────────────
 const AppInner = () => {
@@ -34,11 +35,31 @@ const AppInner = () => {
     navigate("/");
   }, [navigate]);
 
-  // ── Called when Game finishes → optionally save score then go home ──
-  const handleGameEnd = useCallback((result) => {
-    // result = { username, score, accuracy, bestStreak, questionNum }
-    // You can fire your Firebase leaderboard save here if you want App-level control:
-    // addToLeaderboard(result.username, result.score);
+  // ── Called when Game finishes → save to Firebase then go home ──
+  // result = { username, score, accuracy, bestStreak, flagCount, gameMode, reason }
+  const handleGameEnd = useCallback(async (result) => {
+    const { username, score, accuracy, bestStreak, flagCount, gameMode } = result || {};
+
+    // Only save valid completed games with a real score
+    if (username && typeof score === "number" && score > 0) {
+      try {
+        const outcome = await addToLeaderboard(username, score, {
+          accuracy,
+          bestStreak,
+          flagCount,
+          gameMode,
+        });
+        if (outcome?.newBest) {
+          console.info(`[Leaderboard] 🏆 New personal best for ${username}: ${score}`);
+        } else if (outcome?.saved) {
+          console.info(`[Leaderboard] Score saved. Best remains ${outcome.previous}`);
+        }
+      } catch (err) {
+        // Never block navigation if Firebase fails
+        console.error("[Leaderboard] Save failed:", err);
+      }
+    }
+
     navigate("/");
   }, [navigate]);
 
