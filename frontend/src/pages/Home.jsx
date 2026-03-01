@@ -630,7 +630,7 @@ export default function Home({ onStart, onNavigate }) {
 
           {/* Nav */}
           <nav className="nav">
-            <span className="nav-logo">🌍 FLAGMASTER</span>
+            <span className="nav-logo">🌍 Guess the Flag</span>
             <div className="nav-links">
               <button className="nav-link" onClick={() => onNavigate?.("leaderboard")}>Leaderboard</button>
               <button className="nav-link" onClick={() => onNavigate?.("daily")}>Daily Challenge</button>
